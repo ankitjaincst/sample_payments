@@ -1,0 +1,12 @@
+<div class="form_container">
+  <p> <%= link_to 'Home', root_path %> </p>
+
+  <h3 class="form_heading alert alert-info"> New Booking</h3>
+
+  <%= form_for @booking, url: booking_create_path, method: 'POST' do |f| %>
+    <%= render partial: 'booking/form_partial' ,locals: {f: f} %>
+  <% end %>
+
+</div>
+
+

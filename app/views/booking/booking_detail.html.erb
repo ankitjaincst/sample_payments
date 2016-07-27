@@ -1,0 +1,103 @@
+<div class="page_container">
+  <h3 class="alert alert-info page_heading"> Payment Details</h3>
+
+  <p> Booking status : <b><%= @booking.status %> </b></p>
+
+  <p> <b> Total charge : <%= @booking_fare.total_charge %> </b> </p>
+
+  <p>
+    <% if @booking_fare.pending_amount > 0 %>
+      Amount outstanding on Customer : <%= @booking_fare.pending_amount.abs %>
+    <% elsif @booking_fare.pending_amount < 0 %>
+      Amount outstanding on Zoomcar : <%= @booking_fare.pending_amount.abs %>
+    <% else %>
+      <b> No Pending Amount</b>
+    <% end %>
+  </p>
+
+  <div>
+    Final Settlement Amount Paid
+    : <%= @booking_fare.final_settlement_paid_amount %>
+  </div>
+
+  <div class="full_detail">
+    <p> <b> Details : </b></p>
+    <table class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+          <td>booking fee</td>
+          <td>security</td>
+          <td>cleaning chr</td>
+          <td>late chr</td>
+          <td>damage fee</td>
+          <td>other chr</td>
+          <td>total chr</td>
+          <td>pending</td>
+          <td>Online Paid</td>
+          <td>final_settlement_paid_amount</td>
+          <td>refunded</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td> <%= @booking_fare.booking_fee%> </td>
+          <td> <%= @booking_fare.security%> </td>
+          <td> <%= @booking_fare.cleaning_charge%> </td>
+          <td> <%= @booking_fare.late_charge%> </td>
+          <td> <%= @booking_fare.damage_fee%> </td>
+          <td> <%= @booking_fare.other_charge%> </td>
+          <td> <%= @booking_fare.total_charge%> </td>
+          <td> <%= @booking_fare.pending_amount%> </td>
+          <td> <%= @booking_fare.online_payment_done_amount%> </td>
+          <td> <%= @booking_fare.final_settlement_paid_amount%> </td>
+          <td> <%= @booking_fare.refunded_amount%> </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <% if @paytm_payments.present? && @paytm_payments.length > 0 %>
+    <h4 class="alert alert-success"> Paytm Payments </h4>
+    <table class="table table-striped table-bordered">
+      <thead>
+      <tr>
+        <th>Paytm payment id</th>
+        <th>Amount</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @paytm_payments.each do |paytm| %>
+        <tr>
+          <td><%= paytm.paytm_payment_id %></td>
+          <td><%= paytm.amount %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+  <% end %>
+
+  <% if @citrus_payments.present? && @citrus_payments.length > 0 %>
+    <h4 class="alert alert-success"> Citrus Payments </h4>
+    <table class="table table-striped table-bordered">
+      <thead>
+      <tr>
+        <th>Citrus payment id</th>
+        <th>Amount</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @citrus_payments.each do |citrus| %>
+        <tr>
+          <td><%= citrus.cirtus_payment_id %></td>
+          <td><%= citrus.amount %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <p> <%= link_to 'Home', root_path %> <%= link_to 'New Booking', booking_new_path %>  </p>
+
+</div>
+

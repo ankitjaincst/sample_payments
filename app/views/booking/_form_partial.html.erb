@@ -1,0 +1,92 @@
+<% if params[:action] == 'edit' %>
+  <%= hidden_field_tag 'booking_id', @booking.booking_id %>
+<% end %>
+<div class="form-section">
+  <%= f.label :customer_name %><br>
+  <%= f.select :customer_id,
+               options_for_select(Customer.all.map { |x| [x.name, x.id] },
+                                  :selected => @booking.customer_id),
+               prompt: true,
+               datavalid: 'req',
+               class: 'form-control'
+  %>
+</div>
+
+<div class="form-section">
+  <%= f.label :date_time %><br>
+  <%= f.text_field :booking_time,
+                   class: 'form-control datetimepicker',
+                   required: true
+  %>
+</div>
+
+<div class="form-section">
+  <%= f.label :status %><br>
+  <%= f.select :status,
+               options_for_select(Booking.statuses.keys,selected: @booking.status),
+               datavalid: 'req',
+               class: 'form-control'
+  %>
+</div>
+
+<br/>
+
+<%= fields_for @booking_fare do |bf| %>
+  <div class="form-section">
+    <%= bf.label :booking_fee %><br>
+    <%= bf.text_field :booking_fee, readonly: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-section">
+    <%= bf.label :security %><br>
+    <%= bf.text_field :security, readonly: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-section">
+    <%= bf.label :cleaning_charge %><br>
+    <%= bf.text_field :cleaning_charge, class: 'form-control' %>
+  </div>
+
+  <div class="form-section">
+    <%= bf.label :late_charge %><br>
+    <%= bf.text_field :late_charge, class: 'form-control' %>
+  </div>
+
+  <div class="form-section">
+    <%= bf.label :damage_fee %><br>
+    <%= bf.text_field :damage_fee, class: 'form-control' %>
+  </div>
+
+  <div class="form-section">
+    <%= bf.label :other_charge %><br>
+    <%= bf.text_field :other_charge, class: 'form-control' %>
+  </div>
+
+  <div class="form-section">
+    <%= bf.label :final_settlement_paid_amount %><br>
+    <%= bf.text_field :final_settlement_paid_amount, class: 'form-control' %>
+  </div>
+
+  <div class="form-section">
+    <%= bf.label :refunded_amount %><br>
+    <%= bf.text_field :refunded_amount, class: 'form-control' %>
+  </div>
+
+<% end %>
+
+<div class="online_payments_record">
+  <% if params[:action] == 'edit' %>
+    <p style="margin-top: 30px;"> <b>Total online payment done
+      : <%= @booking_fare.online_payment_done_amount %> </b> </p>
+  <% end %>
+  <button type="button" class="btn btn-success add_new_payment_record"> Add
+    Online Payment Record
+  </button>
+  <div class="payment_records_list">
+
+  </div>
+</div>
+
+<p class="submit-container">
+  <%= f.submit 'SUBMIT', class: 'btn btn-primary' %>
+</p>

@@ -1,0 +1,9 @@
+<div class="form_container">
+
+  <h3 class="form_heading alert alert-info"> Edit Booking</h3>
+
+  <%= form_for @booking, url: booking_update_path, method: 'POST' do |f| %>
+    <%= render partial: 'booking/form_partial' ,locals: {f: f} %>
+  <% end %>
+
+</div>
